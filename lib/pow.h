@@ -1,7 +1,7 @@
 /*
  * pow.h
  *
- *  Created on: 2014Äê12ÔÂ30ÈÕ
+ *  Created on: 2014å¹´12æœˆ30æ—¥
  *      Author: kohit
  */
 

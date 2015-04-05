@@ -1,39 +1,39 @@
 /*
  * bitmap.h
  *
- *  Created on: 2014Äê11ÔÂ9ÈÕ
+ *  Created on: 2014å¹´11æœˆ9æ—¥
  *      Author: kohit
  */
 
 class Bitmap{
 private:
-	int size, top; // Õ»Ö¸Õë
+	int size, top; // æ ˆæŒ‡é’ˆ
 	int * S, * F;
 protected:
-	bool valid( int r ) { return ( 0 <= r ) && ( r < top ); } // ¼ìÑéÖÈÊÇ·ñºÏ·¨
-	bool erased( int k ){ return valid( F[k] ) && !( S[ F[ k ] ] + 1 + k ); } // ¼ìÑéÖÈÓëÖµÊÇ·ñºÏ·¨£¬Ô¼¶¨´ËÊ±ÖµÎª-k-1
+	bool valid( int r ) { return ( 0 <= r ) && ( r < top ); } // æ£€éªŒç§©æ˜¯å¦åˆæ³•
+	bool erased( int k ){ return valid( F[k] ) && !( S[ F[ k ] ] + 1 + k ); } // æ£€éªŒç§©ä¸å€¼æ˜¯å¦åˆæ³•ï¼Œçº¦å®šæ­¤æ—¶å€¼ä¸º-k-1
 public:
 	Bitmap( int _size ){
 		size = _size; top = 0;
-		S = new int[ size ]; // Öµ
-		F = new int[ size ]; // ÖÈ
+		S = new int[ size ]; // å€¼
+		F = new int[ size ]; // ç§©
 	}
 	~Bitmap(){
 		delete [] S; delete [] F;
 	}
 	void renew(){
-		top = 0; // ½«Õ»Ö¸ÕëÖÃÎª0£¬±íÊ¾Õ»¿Õ£¨³õÊ¼»¯ËùÓĞÔªËØ£©
+		top = 0; // å°†æ ˆæŒ‡é’ˆç½®ä¸º0ï¼Œè¡¨ç¤ºæ ˆç©ºï¼ˆåˆå§‹åŒ–æ‰€æœ‰å…ƒç´ ï¼‰
 	}
 	void set( int k ){
-		if ( test( k ) ) return ; // ±ÜÃâÖØ¸´
-		if ( !erased( k ) ) F[k] = top++; // É¾³ı¹ıºóÖØÖÃÖÈ
-		S[ F[k] ] = k; // "´æ´¢" k
+		if ( test( k ) ) return ; // é¿å…é‡å¤
+		if ( !erased( k ) ) F[k] = top++; // åˆ é™¤è¿‡åé‡ç½®ç§©
+		S[ F[k] ] = k; // "å­˜å‚¨" k
 	}
 	void remove( int k ){
-		if ( test( k ) ) // ±ÜÃâÖØ¸´
-			S[ F[ k ] ] = -k - 1; // Ô¼¶¨É¾³ı¹ıµÄÖµÎª-k-1
+		if ( test( k ) ) // é¿å…é‡å¤
+			S[ F[ k ] ] = -k - 1; // çº¦å®šåˆ é™¤è¿‡çš„å€¼ä¸º-k-1
 	}
 	bool test( int k ){
-		return valid( F[k] ) && ( k == S[ F[k] ] ); // µ±ÖÈÓëÖµÍ¬Ê±Âú×ã±íÊ¾ÔªËØÔÚbitmapÖĞ
+		return valid( F[k] ) && ( k == S[ F[k] ] ); // å½“ç§©ä¸å€¼åŒæ—¶æ»¡è¶³è¡¨ç¤ºå…ƒç´ åœ¨bitmapä¸­
 	}
 };

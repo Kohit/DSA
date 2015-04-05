@@ -2,7 +2,7 @@
 /*
  * looplist.h
  *
- *  Created on: 2014Äê10ÔÂ31ÈÕ
+ *  Created on: 2014å¹´10æœˆ31æ—¥
  *      Author: kohit
  */
 #define iterator(T) Node<T>*

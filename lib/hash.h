@@ -1,8 +1,8 @@
 /*
  * hash.h
  *
- *  Created on: 2015Äê1ÔÂ11ÈÕ
- *  Revised on: 2015Äê4ÔÂ4ÈÕ
+ *  Created on: 2015å¹´1æœˆ11æ—¥
+ *  Revised on: 2015å¹´4æœˆ4æ—¥
  *      Author: kohit
  */
 

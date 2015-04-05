@@ -1,7 +1,7 @@
 /*
  * S_queap.h
  *
- *  Created on: 2014Äê11ÔÂ21ÈÕ
+ *  Created on: 2014å¹´11æœˆ21æ—¥
  *      Author: kohit
  */
 
@@ -9,41 +9,41 @@
 
 class Queap{
 private:
-	struct node{          // ×îÖµÖØ¸´·Ç³£¶à£¬ÓÃ¼ÆÊıÆ÷À´±£´æÖØ¸´Öµ£¬¼õÉÙ½ø³öÕ»´ÎÊı
+	struct node{          // æœ€å€¼é‡å¤éå¸¸å¤šï¼Œç”¨è®¡æ•°å™¨æ¥ä¿å­˜é‡å¤å€¼ï¼Œå‡å°‘è¿›å‡ºæ ˆæ¬¡æ•°
 		int e, count;
 		node(){
 			e = 0; count = 0;
 		}
 		node( int ee, int cc ): e(ee), count(cc){}
 	};
-	Stack<int> S1, S2;     // ±£´æÊı¾İ
-	Stack<node> SM1, SM2;  // ±£´æ×îÖµ
+	Stack<int> S1, S2;     // ä¿å­˜æ•°æ®
+	Stack<node> SM1, SM2;  // ä¿å­˜æœ€å€¼
 public:
 	Queap(){}
 	void enqueap( int e ){
 		S1.push( e );
 		int count = 1;
-		while( !SM1.empty() && SM1.top().e > e ){ // Õ»¶¥µÄÖµ±Èe´ó£¬Ôò
-			count+= SM1.pop().count;              // Õ»¶¥ÖµÓ¦¸Ã¸ÄÎªe£¬Ê¹µÃ
-		}                                         // Õ»´ÓµÍµ½¶¥³ÉµİÔöĞòÁĞ
+		while( !SM1.empty() && SM1.top().e > e ){ // æ ˆé¡¶çš„å€¼æ¯”eå¤§ï¼Œåˆ™
+			count+= SM1.pop().count;              // æ ˆé¡¶å€¼åº”è¯¥æ”¹ä¸ºeï¼Œä½¿å¾—
+		}                                         // æ ˆä»ä½åˆ°é¡¶æˆé€’å¢åºåˆ—
 		SM1.push( node( e, count ) );
 	}
 	int dequeap(){
-		while( !SM1.empty() ){                    // ³ö¶ÓÊ±Ó¦½«×îÖµÕ»Õ»µ×ÔªËØµÄ
-			SM2.push( SM1.pop() );                // ¼ÆÊıÆ÷¼õ1£¬Ö±µ½ÆäÎª0Ê±µ¯³ö
+		while( !SM1.empty() ){                    // å‡ºé˜Ÿæ—¶åº”å°†æœ€å€¼æ ˆæ ˆåº•å…ƒç´ çš„
+			SM2.push( SM1.pop() );                // è®¡æ•°å™¨å‡1ï¼Œç›´åˆ°å…¶ä¸º0æ—¶å¼¹å‡º
 		}
 		if ( --(SM2.top().count) == 0 ) SM2.pop();
 		while( !SM2.empty() ){
 			SM1.push( SM2.pop() );
 		}
-		if ( S2.empty() )                         // µ±S2Îª¿ÕÊ±²Åµ¹ÖÃS1µÄÖµ
-			while( !S1.empty() ){                 // Ê¹µÃS2µÄÖµ×Ü±ÈS1ÏÈ½ø¶Ó
+		if ( S2.empty() )                         // å½“S2ä¸ºç©ºæ—¶æ‰å€’ç½®S1çš„å€¼
+			while( !S1.empty() ){                 // ä½¿å¾—S2çš„å€¼æ€»æ¯”S1å…ˆè¿›é˜Ÿ
 				S2.push( S1.pop() );
 			}
 		return S2.pop();
 	}
 	int min(){
-		while( !SM1.empty() ){                    // SM1µ×²¿µÄÖµÎª×îĞ¡Öµ
+		while( !SM1.empty() ){                    // SM1åº•éƒ¨çš„å€¼ä¸ºæœ€å°å€¼
 			SM2.push( SM1.pop() );
 		}
 		int e = SM2.top().e;

@@ -1,7 +1,7 @@
 /*
  * bitmap_v2.h
  *
- *  Created on: 2014Äê12ÔÂ17ÈÕ
+ *  Created on: 2014å¹´12æœˆ17æ—¥
  *      Author: kohit
  */
 #include <cstring>
