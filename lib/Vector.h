@@ -29,7 +29,7 @@ public:
 		delete[] elem;
 	}
 	void expand(){
-		if (size < capacity) return;
+		if (_size < capacity) return;
 		capacity *= 2;
 		T * e = new T[capacity];
 		for (int i = 0; i < _size; i++){
@@ -48,9 +48,7 @@ public:
 		size++;
 	}
 	void push_back(T const & data){
-		if (_size >= capacity){
-			expand();
-		}
+		expand();
 		elem[_size++] = data;
 	}
 	T & operator[] (Rank r){
