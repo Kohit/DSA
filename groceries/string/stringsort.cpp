@@ -7,7 +7,7 @@
  assume the input file is out.txt and the output file is sort.txt
 
  memory: O(batchSize * maxlen), batchSize * maxlen = size of small files
- time: O(lg(n)), n is the number of strings
+ time: O(n * lg(n)), n is the number of strings
 
  7/4/2017
  kohit
@@ -35,11 +35,11 @@ char *  expensiveFunc(char * str) {
 	return str;
 }
 
-// ·ÖÅú´Î´¦Àí£¬Îª·½±ãµ÷ÊÔ£¬ÕâÀïÃ¿1000Ìõ×Ö·û´®ÎªÒ»Åú´Î£¬Í¬Ò»Åú´Î¿É¿¼ÂÇÓÃÒ»Ïß³Ì´¦Àí£¬´¦Àí½á¹ûĞ´ÈëÁÙÊ±ÎÄ±¾ÎÄ¼ş
-// ×îºóÔÙ¶ÔÕâĞ©ÎÄ¼şÊ¹ÓÃ¹é²¢ÅÅĞò½øĞĞÅÅĞò
+// åˆ†æ‰¹æ¬¡å¤„ç†ï¼Œä¸ºæ–¹ä¾¿è°ƒè¯•ï¼Œè¿™é‡Œæ¯1000æ¡å­—ç¬¦ä¸²ä¸ºä¸€æ‰¹æ¬¡ï¼ŒåŒä¸€æ‰¹æ¬¡å¯è€ƒè™‘ç”¨ä¸€çº¿ç¨‹å¤„ç†ï¼Œå¤„ç†ç»“æœå†™å…¥ä¸´æ—¶æ–‡æœ¬æ–‡ä»¶
+// æœ€åå†å¯¹è¿™äº›æ–‡ä»¶ä½¿ç”¨å½’å¹¶æ’åºè¿›è¡Œæ’åº
 const int batchSize = 1000;
-const int maxlen = 1000; // ¼ÙÉèÃ¿¸ö×Ö·û´®³¤¶ÈĞ¡ÓÚ1000
-// ·µ»Ø·Ö¸îµÄÎÄ¼şÊıÁ¿
+const int maxlen = 1000; // å‡è®¾æ¯ä¸ªå­—ç¬¦ä¸²é•¿åº¦å°äº1000
+// è¿”å›åˆ†å‰²çš„æ–‡ä»¶æ•°é‡
 int process(FILE * file) {
 	cout << "processing..." << endl;
 	int num = 0, line = 0;
@@ -51,14 +51,14 @@ int process(FILE * file) {
 			if (tmpf != NULL) fclose(tmpf);
 			ostringstream name;
 			name << "tmp_0_" << num++ << ".txt";
-			tmpf = fopen(name.str().c_str(), "w"); // ÁÙÊ±ÎÄ¼şÃûÎª tmpxx.txt£¬xxÎªÊı×Ö£¬´Ó0¿ªÊ¼
+			tmpf = fopen(name.str().c_str(), "w"); // ä¸´æ—¶æ–‡ä»¶åä¸º tmpxx.txtï¼Œxxä¸ºæ•°å­—ï¼Œä»0å¼€å§‹
 		}
 
 		/////////////////PROCESS//////////////
 		char * res = expensiveFunc(str);
 		//////////////////////////////////////
 
-		fprintf(tmpf, "%s\n", res); // ½á¹ûĞ´ÈëÎÄ¼ş
+		fprintf(tmpf, "%s\n", res); // ç»“æœå†™å…¥æ–‡ä»¶
 	}
 	if (tmpf != NULL) fclose(tmpf);
 	return num;
@@ -68,7 +68,7 @@ int cmp(const void *a, const void *b) {
 	return strcmp((char *)a, (char *)b);
 }
 
-// ¶ÔÃ¿¸öÎÄ¼şÅÅĞò
+// å¯¹æ¯ä¸ªæ–‡ä»¶æ’åº
 char tmpstr[batchSize][maxlen];
 void sortfile(int filenum) {
 	for (int i = 0; i < filenum; i++) {
@@ -99,14 +99,14 @@ void sortfile(int filenum) {
 	}
 }
 
-// ºÏ²¢ÎÄ¼ş
+// åˆå¹¶æ–‡ä»¶
 void merge(int left) {
 	int count = 0;
 	cout << "Merging..." << endl;
-	while (left > 1) { // ÉĞÓĞleft¸öÎÄ¼şÎ´ºÏ²¢
+	while (left > 1) { // å°šæœ‰leftä¸ªæ–‡ä»¶æœªåˆå¹¶
 		int j = 0;
-		for (int i = 0; i < left; i += 2) { // Ã¿´ÎºÏ²¢Á½¸öÎÄ¼ş
-			FILE *tmp1 = NULL, *tmp2 = NULL, *tmp3 = NULL; // tmp3ÎªÊä³öÎÄ¼ş
+		for (int i = 0; i < left; i += 2) { // æ¯æ¬¡åˆå¹¶ä¸¤ä¸ªæ–‡ä»¶
+			FILE *tmp1 = NULL, *tmp2 = NULL, *tmp3 = NULL; // tmp3ä¸ºè¾“å‡ºæ–‡ä»¶
 			char str1[maxlen], str2[maxlen];
 			ostringstream name;
 			name << "tmp_" << count << "_" << i << ".txt";
@@ -114,7 +114,7 @@ void merge(int left) {
 			name.clear(); name.str("");
 			name << "tmp_" << count + 1 << "_" << j++ << ".txt";
 			tmp3 = fopen(name.str().c_str(), "w");
-			if (i == left - 1) { // Ö»ÓĞÒ»¸öÎÄ¼ş£¬Ö±½Ó¸´ÖÆ
+			if (i == left - 1) { // åªæœ‰ä¸€ä¸ªæ–‡ä»¶ï¼Œç›´æ¥å¤åˆ¶
 				// last file
 				while (fscanf(tmp1, "%s", str1) != EOF) {
 					fprintf(tmp3, "%s\n", str1);
@@ -130,11 +130,11 @@ void merge(int left) {
 			fscanf(tmp1, "%s", str1);
 			fscanf(tmp2, "%s", str2);
 			
-			// ·´¸´±È½ÏÁ½¸öÎÄ¼şµÄ×Ö·û´®
+			// åå¤æ¯”è¾ƒä¸¤ä¸ªæ–‡ä»¶çš„å­—ç¬¦ä¸²
 			while (strlen(str1) > 0 && strlen(str2) > 0) {
-				if (strcmp(str1, str2) <= 0) { // ×Ö·û´®1 <= ×Ö·û´®2
+				if (strcmp(str1, str2) <= 0) { // å­—ç¬¦ä¸²1 <= å­—ç¬¦ä¸²2
 					fprintf(tmp3, "%s\n", str1);
-					if (fscanf(tmp1, "%s", str1) == EOF) { // ÒÆ¶¯ÎÄ¼ş1Ö¸Õë
+					if (fscanf(tmp1, "%s", str1) == EOF) { // ç§»åŠ¨æ–‡ä»¶1æŒ‡é’ˆ
 						str1[0] = '\0';
 						break;
 					}
@@ -148,14 +148,14 @@ void merge(int left) {
 				}
 			}
 			
-			// ÊÕ¼¯ÎÄ¼ş2Ê£Óà×Ö·û´®
+			// æ”¶é›†æ–‡ä»¶2å‰©ä½™å­—ç¬¦ä¸²
 			if (strlen(str1) == 0 && strlen(str2) > 0) {
 				do {
 					fprintf(tmp3, "%s\n", str2);
 				} while (fscanf(tmp2, "%s", str2) != EOF);
 			}
 			
-			// ÊÕ¼¯ÎÄ¼ş1Ê£Óà×Ö·û´®
+			// æ”¶é›†æ–‡ä»¶1å‰©ä½™å­—ç¬¦ä¸²
 			if (strlen(str1) > 0 && strlen(str2) == 0) {
 				do {
 					fprintf(tmp3, "%s\n", str1);
@@ -165,11 +165,11 @@ void merge(int left) {
 			fclose(tmp2);
 			fclose(tmp3);
 		}
-		count++; // ÏÂÒ»²ãºÏ²¢
-		left = j; // ¸üĞÂÊ£Óà´ıºÏ²¢ÎÄ¼şÊıÄ¿
+		count++; // ä¸‹ä¸€å±‚åˆå¹¶
+		left = j; // æ›´æ–°å‰©ä½™å¾…åˆå¹¶æ–‡ä»¶æ•°ç›®
 	}
 
-	// ±£´æ½á¹û£¨¼´×îºóÒ»²ãºÏ²¢½á¹û£©
+	// ä¿å­˜ç»“æœï¼ˆå³æœ€åä¸€å±‚åˆå¹¶ç»“æœï¼‰
 	cout << "Collecting data..." << endl;
 	FILE *tmp = NULL, *res = NULL;
 	char str1[maxlen];
@@ -187,16 +187,16 @@ void merge(int left) {
 
 
 int main() {
-	char * name = "out.txt"; // ¼ÙÉèÊäÈëÎªout.txt£¬Êä³öÎªsort.txt
+	char * name = "out.txt"; // å‡è®¾è¾“å…¥ä¸ºout.txtï¼Œè¾“å‡ºä¸ºsort.txt
 	FILE * file = fopen(name, "r");
 	if (file == NULL) {
 		cout << "failed to open file" << endl;
 		return -1;
 	}
 	int filenum = 0;
-	filenum = process(file); // ¶ÁÈë²¢·ÖÅú´Î´¦Àí£¬´¦ÀíºóĞ´ÈëÁÙÊ±ÎÄ¼ş
+	filenum = process(file); // è¯»å…¥å¹¶åˆ†æ‰¹æ¬¡å¤„ç†ï¼Œå¤„ç†åå†™å…¥ä¸´æ—¶æ–‡ä»¶
 	fclose(file);
-	sortfile(filenum); // ¶ÔÃ¿¸öÁÙÊ±ÎÄ¼şÅÅĞò
-	merge(filenum); // ºÏ²¢ÎÄ¼ş
+	sortfile(filenum); // å¯¹æ¯ä¸ªä¸´æ—¶æ–‡ä»¶æ’åº
+	merge(filenum); // åˆå¹¶æ–‡ä»¶
 	return 0;
 }
