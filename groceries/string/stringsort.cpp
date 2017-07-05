@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <string.h>
 #include <sstream>
 #include <algorithm>
 using namespace std;
@@ -58,7 +59,7 @@ int process(FILE * file) {
 		char * res = expensiveFunc(str);
 		//////////////////////////////////////
 
-		fprintf(tmpf, "%s\n", res); // 结果写入文件
+		fprintf(tmpf, "%s\n\r", res); // 结果写入文件
 	}
 	if (tmpf != NULL) fclose(tmpf);
 	return num;
@@ -93,7 +94,7 @@ void sortfile(int filenum) {
 		rewind(tmpf);
 		for (int j = 0; j < line && j < batchSize; j++) {
 			if (strlen(tmpstr[j]) > 0)
-			fprintf(tmpf, "%s\n", tmpstr[j]);
+			fprintf(tmpf, "%s\n\r", tmpstr[j]);
 		}
 		fclose(tmpf);
 	}
@@ -117,7 +118,7 @@ void merge(int left) {
 			if (i == left - 1) { // 只有一个文件，直接复制
 				// last file
 				while (fscanf(tmp1, "%s", str1) != EOF) {
-					fprintf(tmp3, "%s\n", str1);
+					fprintf(tmp3, "%s\n\r", str1);
 				}
 				fclose(tmp1);
 				fclose(tmp3);
@@ -133,14 +134,14 @@ void merge(int left) {
 			// 反复比较两个文件的字符串
 			while (strlen(str1) > 0 && strlen(str2) > 0) {
 				if (strcmp(str1, str2) <= 0) { // 字符串1 <= 字符串2
-					fprintf(tmp3, "%s\n", str1);
+					fprintf(tmp3, "%s\n\r", str1);
 					if (fscanf(tmp1, "%s", str1) == EOF) { // 移动文件1指针
 						str1[0] = '\0';
 						break;
 					}
 				}
 				else {
-					fprintf(tmp3, "%s\n", str2);
+					fprintf(tmp3, "%s\n\r", str2);
 					if (fscanf(tmp2, "%s", str2) == EOF) {
 						str2[0] = '\0';
 						break;
@@ -151,14 +152,14 @@ void merge(int left) {
 			// 收集文件2剩余字符串
 			if (strlen(str1) == 0 && strlen(str2) > 0) {
 				do {
-					fprintf(tmp3, "%s\n", str2);
+					fprintf(tmp3, "%s\n\r", str2);
 				} while (fscanf(tmp2, "%s", str2) != EOF);
 			}
 			
 			// 收集文件1剩余字符串
 			if (strlen(str1) > 0 && strlen(str2) == 0) {
 				do {
-					fprintf(tmp3, "%s\n", str1);
+					fprintf(tmp3, "%s\n\r", str1);
 				} while (fscanf(tmp1, "%s", str1) != EOF);
 			}
 			fclose(tmp1);
@@ -178,7 +179,7 @@ void merge(int left) {
 	tmp = fopen(name.str().c_str(), "r+");
 	res = fopen("sort.txt", "w");
 	while (fscanf(tmp, "%s", str1) != EOF) {
-		fprintf(res, "%s\n", str1);
+		fprintf(res, "%s\n\r", str1);
 	}
 	fclose(tmp);
 	fclose(res);
