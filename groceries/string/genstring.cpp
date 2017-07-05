@@ -1,7 +1,7 @@
 /*
  randomly generate n strings to output file,
- length of each string in range(minlen, maxlen)
- input augments are number of strings, min length, max length, output filename
+ length of each string in range[minlen, maxlen]
+ input arguments are number of strings, min length, max length, output filename
  e.g.
  g++ genstring.cpp -o genstring // compile
  ./genstring 10000 5 30 out.txt // generate 10000 strings, length of each string in range[5,30], the output file is out.txt
@@ -58,7 +58,7 @@ void gen(int n, int minlen, int maxlen, char * name) {
 }
 
 int main(int argc, char * argv[]) { 
-	// augments are number of strings, min length, max length, output filename
+	// arguments are number of strings, min length, max length, output filename
 	for (int i = 'A'; i <= 'Z'; i++)
 		dictionary[i - 'A'] = i;
 	for (int i = 'a'; i <= 'z'; i++)
