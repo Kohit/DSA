@@ -73,7 +73,7 @@ int cmp(const void *a, const void *b) {
 char tmpstr[batchSize][maxlen];
 void sortfile(int filenum) {
 	for (int i = 0; i < filenum; i++) {
-		cout << "sorting " << i + 1 << " of " << filenum + 1 << "file" << endl;
+		cout << "sorting " << i + 1 << " of " << filenum << " files" << endl;
 		ostringstream name;
 		name << "tmp_0_" << i << ".txt";
 		FILE * tmpf = fopen(name.str().c_str(), "r+");
@@ -188,7 +188,7 @@ void merge(int left) {
 
 
 int main() {
-	char * name = "out.txt"; // 假设输入为out.txt，输出为sort.txt
+	const char * name = "out.txt"; // 假设输入为out.txt，输出为sort.txt
 	FILE * file = fopen(name, "r");
 	if (file == NULL) {
 		cout << "failed to open file" << endl;
