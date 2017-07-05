@@ -2,9 +2,12 @@
  randomly generate n strings to output file,
  length of each string in range(minlen, maxlen)
  input augments are number of strings, min length, max length, output filename
+ e.g.
+ g++ genstring.cpp -o genstring // compile
+ ./genstring 10000 5 30 out.txt // generate 10000 strings, length of each string in range[5,30], the output file is out.txt
 
  memory: O(MAXLEN), here MAXLEN = 1000;
- time: O(n * MAXLEN), n is the number of strings, MAXLEN is the average length of strings
+ time: O(n * LEN), n is the number of strings, LEN is the average length of strings
 
  7/4/2017
  kohit
@@ -29,13 +32,13 @@ struct fastio {  // set larger io buffer size to speed up
 }io;
 
 char dictionary[52];
-const int MAXLEN = 1000;
+const int MAXLEN = 1000; // assume maxlen < 1000;
 void gen(int n, int minlen, int maxlen, char * name) {
 	//ofstream outfile;
 	//outfile.open(name, ios::out);
 	FILE * file = fopen(name, "w"); // usage stdio instead
 	srand((unsigned)time(0));
-	char str[MAXLEN]; // assume maxlen < 1000;
+	char str[MAXLEN]; 
 	for (int i = 0; i < n; i++) {
 		memset(str, 0, sizeof(char) * MAXLEN);
 		int len = rand() % (maxlen - minlen + 1) + minlen; // string len in range[minlen, maxlen]
