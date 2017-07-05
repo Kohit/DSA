@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include <string.h>
 using namespace std;
 
 const int sz = 1 << 20;
@@ -36,7 +37,7 @@ void gen(int n, int minlen, int maxlen, char * name) {
 	srand((unsigned)time(0));
 	char str[MAXLEN]; // assume maxlen < 1000;
 	for (int i = 0; i < n; i++) {
-		memset(str, 0, sizeof(str) * MAXLEN);
+		memset(str, 0, sizeof(char) * MAXLEN);
 		int len = rand() % (maxlen - minlen + 1) + minlen; // string len in range[minlen, maxlen]
 		int j = 0;
 		for (; j < len; j++) {  // generate a random string with length = len
@@ -46,8 +47,7 @@ void gen(int n, int minlen, int maxlen, char * name) {
 		str[j] = '\0';
 		//cout << str << endl;
 		//outfile << str << endl; 
-		fprintf(file, str);  // write to file
-		fprintf(file, "\n");
+		fprintf(file, "%s\n\r", str);  // write to file
 		cout << "progress: " << (double)(i + 1) / n * 100 << "%" << endl;
 	}
 	//outfile.close();
