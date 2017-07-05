@@ -4,7 +4,7 @@
  2. sort each files with qsort
  3. merge these files into a single file
  
- assume the input file is out.txt and the output file is sort.txt
+ assume the input file is out.txt and the output file is sort.txt (there are some temporary files(temp_x_x.txt) needs to be manually deleted)
 
  memory: O(batchSize * maxlen), batchSize * maxlen = size of small files
  time: O(n * lg(n)), n is the number of strings
